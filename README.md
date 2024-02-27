@@ -1,2 +1,5 @@
 # Protect-JoJo.
-Record body temperature. Log medication times. Plot the temperature curve. Note the intervals between medication doses
+1. Record body temperature. 
+2. Log medication times. 
+3. Plot the temperature curve. 
+4. Note the intervals between medication doses
