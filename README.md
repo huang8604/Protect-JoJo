@@ -1,6 +1,5 @@
 # Protect-JoJo.
 
-#test commit
 
 1. Record body temperature. 
 2. Log medication times. 
