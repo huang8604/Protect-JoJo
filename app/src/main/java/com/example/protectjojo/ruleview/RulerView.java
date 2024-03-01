@@ -385,6 +385,18 @@ public class RulerView extends View implements ScrollChange {
         }
     }
 
+
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+        int centerPointX = mRulerHelper.getCenterPointX();
+        int currentX = centerPointX + l;
+        int scrollDistance = mRulerHelper.getScrollDistance(currentX);
+        if (scrollSelected != null) {
+            scrollSelected.selected(getCurrentText());
+        }
+    }
+
     private void doScroll(int dx, int dy, int duration) {
         mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), dx, dy, duration);
     }
