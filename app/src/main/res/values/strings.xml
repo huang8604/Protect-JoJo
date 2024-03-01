@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ProtectJoJo</string>
+    <string name="title_home">Today</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="tSave">save</string>
+    <string name="tempa">37°C</string>
+</resources>

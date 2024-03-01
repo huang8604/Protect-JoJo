@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">发烧拜拜</string>
+    <string name="title_home">今日</string>
+    <string name="title_dashboard">分析</string>
+    <string name="title_notifications">数据</string>
+    <string name="tSave">添加</string>
+    <string name="tempa">37°C</string>
+</resources>
