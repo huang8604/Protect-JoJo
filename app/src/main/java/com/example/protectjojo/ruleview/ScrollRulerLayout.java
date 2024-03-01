@@ -142,6 +142,9 @@ public class ScrollRulerLayout extends ViewGroup implements ScrollSelected {
         mRulerView.setScrollSelected(scrollSelected);
     }
 
+    public String getCurrentText() {
+        return mRulerView.getCurrentText();
+    }
 
     @Override
     public void selected(String selected) {
