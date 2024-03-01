@@ -1,5 +1,6 @@
 package com.example.protectjojo.ruleview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.Scroller;
+
+import com.example.protectjojo.R;
 
 /**
  * Created to :
@@ -142,6 +145,7 @@ public class RulerView extends View implements ScrollChange {
         init(context);
     }
 
+    @SuppressLint("ResourceAsColor")
     private void init(Context context) {
         initDistanceForDp();
         mRulerHelper = new RulerHelper(this);
@@ -155,7 +159,7 @@ public class RulerView extends View implements ScrollChange {
         mLinePaint.setAntiAlias(true);
         mLinePaint.setStrokeWidth(mLineWidth);
         mLinePaint.setStyle(Paint.Style.FILL);
-        mLinePaint.setColor(RulerHelper.normalColor);
+        mLinePaint.setColor(getResources().getColor(R.color.white));
 
         mRect = new Rect();
         mScroller = new Scroller(context);
@@ -274,14 +278,9 @@ public class RulerView extends View implements ScrollChange {
                 canvas.drawText(text, mRect.centerX(), getMeasuredHeight() - dpForTextEnd, mTextPaint);
             }
             float floatValue = Float.parseFloat(text);
+            int currentColor = RulerHelper.getBodyTempColor(floatValue);
+            mLinePaint.setColor(currentColor);
 
-            if(floatValue < 37.5f){
-                mLinePaint.setColor(RulerHelper.normalColor);
-            }else if (floatValue < 38.5){
-                mLinePaint.setColor(RulerHelper.warmColor);
-            }else{
-                mLinePaint.setColor(RulerHelper.feverColor);
-            }
 
             canvas.drawRect(mRect, mLinePaint);
             mRect.setEmpty();

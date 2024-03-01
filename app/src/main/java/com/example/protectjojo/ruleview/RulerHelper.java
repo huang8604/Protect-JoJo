@@ -1,5 +1,6 @@
 package com.example.protectjojo.ruleview;
 
+import android.animation.ArgbEvaluator;
 import android.graphics.Color;
 
 import java.util.ArrayList;
@@ -17,9 +18,32 @@ public class RulerHelper {
 
 
     public  static  final int normalColor = Color.parseColor("#8BC846");
-    public static final int warmColor = Color.parseColor("#FF3A3A");
-    public static final int feverColor = Color.parseColor("#FF7A32");
+    public static final int warmColor = Color.parseColor("#FF7A32");
+    public static final int feverColor = Color.parseColor("#FF3A3A");
     private String currentText;
+
+    public static final float normalLevel = 37.5f;
+    public static final float warmlLevel = 38.5f;
+
+    public static final float avaLevel = (normalLevel + warmlLevel)/2;
+    public static int getBodyTempColor(float temperature) {
+        if(temperature < normalLevel){
+            return normalColor;
+        }else if (temperature > warmlLevel){
+            return feverColor;
+        }else{
+           if( temperature >= normalLevel &&  temperature < avaLevel){
+               return getIntermediateColor(  (temperature - normalLevel)/(avaLevel- normalLevel),normalColor,warmColor );
+           }else{
+               return getIntermediateColor(  (temperature - avaLevel)/(warmlLevel -avaLevel),warmColor,feverColor );
+           }
+        }
+    }
+
+    public static int getIntermediateColor(float fraction, int startColor, int endColor) {
+        ArgbEvaluator evaluator = new ArgbEvaluator();
+        return (int) evaluator.evaluate(fraction, startColor, endColor);
+    }
 
     private List<String> texts;
 
@@ -125,6 +149,9 @@ public class RulerHelper {
         mPoints.add(x);
         if (mPoints.size() == texts.size() && null != scrollChange) {
             int index = texts.indexOf(currentText);
+            if (index < 0) {
+                index = texts.indexOf("37.0");
+            }
             if (index < 0) {
                 return;
             }

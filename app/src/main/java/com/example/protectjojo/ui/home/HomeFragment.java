@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +21,11 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
-    private String currentSelectd = "37";
+    private String currentSelectd = "37.0";
+
+    private TextView mTempTextView ;
+    private LinearLayout mlayout ;
+    private ScrollRulerLayout rulerView ;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -33,11 +38,15 @@ public class HomeFragment extends Fragment {
         //final TextView textView = binding.textHome;
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        final TextView mTempTextView = root.findViewById(R.id.textView);
+        mTempTextView = root.findViewById(R.id.textView);
+        mlayout = root.findViewById(R.id.ruler_layout);
+        rulerView =  root.findViewById(R.id.ruler_view);
 
-        final ScrollRulerLayout rulerView =  root.findViewById(R.id.ruler_view);
         rulerView.setScope(34,45, 1F);
-        rulerView.setCurrentItem("37");
+        rulerView.setCurrentItem("37.0");
+
+
+
         rulerView.setSroollSelectedListener(new ScrollSelected() {
             @Override
             public void selected(String selected) {
@@ -47,19 +56,26 @@ public class HomeFragment extends Fragment {
                 mTempTextView.setText(selectedText);
 
                 float floatValue = Float.parseFloat(currentSelectd);
+                int currentColor = RulerHelper.getBodyTempColor(floatValue);
+                //mlayout.setBackgroundColor(currentColor);
 
-                if(floatValue < 37.5f){
-                    mTempTextView.setTextColor(RulerHelper.normalColor);
-                }else if (floatValue < 38.5){
-                    mTempTextView.setTextColor(RulerHelper.warmColor);
-                }else{
-                    mTempTextView.setTextColor(RulerHelper.feverColor);
-                }
+                mTempTextView.setTextColor(currentColor);
+
             }
         });
 
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        currentSelectd = rulerView.getCurrentText();
+        rulerView.setCurrentItem(currentSelectd);
+        int currentColor = RulerHelper.getBodyTempColor(Float.parseFloat(currentSelectd));
+        mTempTextView.setTextColor(currentColor);
+
     }
 
     @Override
